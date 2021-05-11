@@ -6,16 +6,11 @@ import Title from '../components/Title';
 import Skill from '../components/Skill';
 import BorderButton from '../components/BorderButton';
 
-function Home({ profile }) {
-  const skills = (profile && profile.skills) || [];
-  const resumeHref = (profile && profile.resume && profile.resume.url) || null;
+function Work() {
   return (
     <>
       <Head>
-        <title>
-          {profile.name} - {profile.title}
-        </title>
-        <meta name="description" content={profile.profile} />
+        <title></title>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap"
@@ -25,29 +20,21 @@ function Home({ profile }) {
       <div className="w-full flex flex-col font-main">
         <div className="flex bg-primary items-center justify-center text-white px-10 py-10">
           <div className="text-center flex flex-col justify-center items-center">
-            <h1 className="text-4xl font-bold">Hello</h1>
+            <h1 className="text-4xl font-bold">My work</h1>
             <div className="flex flex-row text-2xl text-center justify-center items-center">
-              <h5>I Am a </h5>&nbsp;
-              <h5 className="font-thin py-2">{profile.title}</h5>
+              <h5>Web and mobile apps built</h5>&nbsp;
             </div>
           </div>
         </div>
         <div className="flex flex-row">
-          <div className="w-1/3 flex flex-col justify-center items-center">
-            {skills.map((skill) => (
-              <Skill key={skill.id} {...skill}></Skill>
-            ))}
-          </div>
           <div className="w-2/3 py-10">
             <Title>About Me.</Title>
-            <p className="text-justify pr-20">{profile.profile}</p>
           </div>
         </div>
         <div className="flex flex-row">
           <BorderButton
             className="hover:bg-primary hover:text-white"
             download={true}
-            href={resumeHref}
             title="Download Resume"
           ></BorderButton>
         </div>
@@ -57,11 +44,11 @@ function Home({ profile }) {
 }
 
 export async function getServerSideProps() {
-  const profile = await query('/profile');
   const menus = await getMainMenu();
+  const profile = await query('/profile');
   return {
     props: { profile, menus },
   };
 }
 
-export default withPageLayout(Home, 'light');
+export default withPageLayout(Work, 'light');
