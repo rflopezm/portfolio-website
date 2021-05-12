@@ -23,7 +23,7 @@ function Home({ profile }) {
         ></link>
       </Head>
       <div className="w-full flex flex-col font-main">
-        <div className="flex bg-primary items-center justify-center text-white px-10 py-10">
+        <div className="flex bg-primary items-center h-40h justify-center text-white px-10 py-10">
           <div className="text-center flex flex-col justify-center items-center">
             <h1 className="text-4xl font-bold">Hello</h1>
             <div className="flex flex-row text-2xl text-center justify-center items-center">
@@ -32,20 +32,21 @@ function Home({ profile }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-row">
-          <div className="w-1/3 flex flex-col justify-center items-center">
+        <div className="flex h-30h flex-row">
+          <div className="w-1/3 flex flex-col py-10 px-10">
+            {/* <Title>My tech stack</Title> */}
             {skills.map((skill) => (
               <Skill key={skill.id} {...skill}></Skill>
             ))}
           </div>
           <div className="w-2/3 py-10">
-            <Title>About Me.</Title>
+            <Title className="text-primary">About Me.</Title>
             <p className="text-justify pr-20">{profile.profile}</p>
           </div>
         </div>
         <div className="flex flex-row">
           <BorderButton
-            className="hover:bg-primary hover:text-white"
+            className="hover:bg-primary border-primary text-primary hover:text-white"
             download={true}
             href={resumeHref}
             title="Download Resume"
@@ -56,7 +57,7 @@ function Home({ profile }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const profile = await query('/profile');
   const menus = await getMainMenu();
   return {

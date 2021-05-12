@@ -14,35 +14,44 @@ function CloseIcon() {
   );
 }
 
-function ModalComponent({ closeModal, menus }) {
-  const linkMenus = menus.filter((menu) => menu.type === 'link');
+function ModalComponent({ closeModal, menus, profile }) {
+  const linkMenus = menus.filter((menu) => menu.type === 'menu');
+
+  const resumeHref = (profile && profile.resume && profile.resume.url) || null;
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 bg-primary flex flex-col z-50">
+    <div className="fixed top-0 bottom-0 left-0 right-0 bg-primary flex flex-col z-50 py-10">
       <div className="relative flex flex-row justify-center items-center">
-        <div className="justify-self-center">
-          <Logo></Logo>
+        <div className="justify-self-center py-2">
+          <Logo title={profile.name}></Logo>
         </div>
         <div className="text-4xl absolute right-0 px-8w cursor-pointer text-menu" onClick={closeModal}>
           <CloseIcon></CloseIcon>
         </div>
       </div>
 
-      <div className="w-full flex justify-center pb-2">
-        <BorderButton className="bg-white" color="primary" title="¡Pide Ya!"></BorderButton>
-      </div>
       {linkMenus.map((m) => (
         <ModalMenu key={m.id} mode="light" {...m}></ModalMenu>
       ))}
+
+      <div className="flex flex-row">
+        <BorderButton
+          className="bg-primary text-menu border-menu hover:text-primary hover:bg-white"
+          download={true}
+          href={resumeHref}
+          title="Download Resume"
+        ></BorderButton>
+      </div>
+
     </div>
   );
 }
 
-export function ModalNavigation({ showModal, menus, closeModal }) {
+export function ModalNavigation({ showModal, menus, closeModal, profile }) {
   const isBrowser = useIsBrowser();
 
   if (isBrowser && showModal) {
     return ReactDOM.createPortal(
-      <ModalComponent closeModal={closeModal} menus={menus}></ModalComponent>,
+      <ModalComponent closeModal={closeModal} menus={menus} profile={profile}></ModalComponent>,
       document.getElementById('modal-root')
     );
   } else {

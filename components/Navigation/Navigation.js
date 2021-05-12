@@ -28,7 +28,7 @@ export default function Navigation({ profile, className, menus = [], mode = 'lig
     Component: m.type === 'menu' ? MainMenu : Logo,
   }));
   return (
-    <nav className={`${className} bg-primary flex justify-center md:justify-end items-center w-full`}>
+    <nav className={`${className} bg-primary flex justify-center md:justify-end items-center w-full py-10`}>
       <div className="px-4 mr-auto">
         <Logo title={profile.name}></Logo>
       </div>
@@ -36,7 +36,7 @@ export default function Navigation({ profile, className, menus = [], mode = 'lig
         <menu.Component key={menu.id} {...menu} mode={mode}></menu.Component>
       ))}
       <HamburguerMenu onClick={openModal} mode={mode}></HamburguerMenu>
-      <ModalNavigation showModal={showModal} closeModal={closeModal} menus={menuItems}></ModalNavigation>
+      <ModalNavigation showModal={showModal} closeModal={closeModal} menus={menuItems} profile={profile}></ModalNavigation>
     </nav>
   );
 }
